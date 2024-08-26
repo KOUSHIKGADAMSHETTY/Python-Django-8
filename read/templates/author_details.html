@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include 'navbar.html' %}
+
+<body>
+    <h1>Author Details</h1>
+    <div class="container mt-5">
+        <div class="col-md-8">
+            <div class="row g-0">
+                <div class="card-body">
+                    <h5 class="card-title">Author: {{ author.name }}</h5>
+                    <p class="card-text">Age: {{ author.age }}</p>
+                    <p class="card-text">
+                        {% if author.photo %}
+                        <img src="{{ author.photo.url }}" alt="{{ author.name }}">
+                        {% else %}
+                        No photo available.
+                        {% endif %}
+                    </p>
+                    {% if request.user.is_superuser %}
+                    <form method="post" action="{% url 'delete_author' author.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Delete Author</button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
